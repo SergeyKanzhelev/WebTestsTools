@@ -55,6 +55,10 @@ namespace WebTestsTools.Controllers
                 cert.Error = certificateError;
             }
 
+            var date = Convert.ToDateTime(cert.ExpirationDate);
+            cert.ExpiresIn10Days = date.AddDays(-10) < DateTime.Now;
+
+
             return cert;
         }
     }
