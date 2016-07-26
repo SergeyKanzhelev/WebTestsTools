@@ -15,14 +15,21 @@ namespace WebTestsTools.Controllers
     {
         private static bool InternalCallback(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
-            WebRequest request = sender as WebRequest;
+            try
+            {
+                WebRequest request = sender as WebRequest;
 
-            Certificate cert = new Certificate();
-            certificates.Add(request, cert);
+                Certificate cert = new Certificate();
+                certificates.Add(request, cert);
 
-            cert.ExpirationDate = certificate.GetExpirationDateString();
-            cert.IssuerName = certificate.Issuer;
-            cert.Subject = certificate.Subject;
+                cert.ExpirationDate = certificate.GetExpirationDateString();
+                cert.IssuerName = certificate.Issuer;
+                cert.Subject = certificate.Subject;
+            }
+            catch (Exception exc)
+            {
+                //do nothing
+            }
 
             return true;
         }
