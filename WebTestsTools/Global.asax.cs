@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.ApplicationInsights.Extensibility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace WebTestsTools
     {
         protected void Application_Start()
         {
+            TelemetryConfiguration.Active.TelemetryInitializers.Add(new PreserveClientIpTelemetryInitializer());
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
