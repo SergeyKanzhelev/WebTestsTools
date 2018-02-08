@@ -39,17 +39,17 @@ namespace WebTestsTools.Controllers
             ServicePointManager.ServerCertificateValidationCallback += InternalCallback;
         }
 
-        private static ConditionalWeakTable<WebRequest, Certificate> certificates = new ConditionalWeakTable<WebRequest, Certificate>(); 
+        private static ConditionalWeakTable<WebRequest, Certificate> certificates = new ConditionalWeakTable<WebRequest, Certificate>();
 
         [Route("certificate/{ip}")]
         public Certificate Get(string ip)
         {
-            var request = (WebRequest)HttpWebRequest.Create("https://" + ip);
-
+            var request = HttpWebRequest.Create("https://" + ip);
             bool certificateError = false;
+
             try
             {
-                request.GetResponse();
+                request.GetResponse().Dispose();
             }
             catch (Exception exc)
             {
